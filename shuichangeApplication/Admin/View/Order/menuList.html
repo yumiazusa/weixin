@@ -1,0 +1,161 @@
+<extend name="Public/base"/>
+
+<block name="style">
+
+<style>
+
+</style>
+
+</block>
+
+<block name="body">
+
+	<div class="main-title">
+
+		<h2>菜品列表</h2>
+
+	</div>
+
+
+
+	<div class="cf">
+
+		<a class="btn" href="{:U('menuAdd')}">新 增</a>
+
+	</div>
+
+	<div class="data-table table-striped">
+
+		 <table>
+
+			<thead>
+
+				<tr>
+
+                    <th>菜品名</th>
+
+					<th>价格</th>
+
+                   	<th>排序</th>
+
+                   	<th>状态</th>
+
+					<th>操作</th>
+
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				<notempty name="data">
+
+				<volist name="data" id="vo">
+
+					<tr>
+
+						<td>{$vo.name}</td>
+
+						<td>{$vo.price}</td>
+
+                        <td>{$vo.sort}</td>
+
+                        <td><if condition="$vo.status eq 1">启用<else />未启用</if></td>
+
+                        <td>
+
+                        <a title="编辑" href="{:U('menuEdit?id='.$vo['id'])}">编辑</a>
+
+                        <a class="confirm ajax-get" title="删除" href='{:U('menuDel?id='.$vo['id'])}'>/删除</a>
+
+                        </td>
+
+					</tr>
+
+				</volist>
+
+				<else/>
+
+				<td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+
+				</notempty>
+
+			</tbody>
+
+		</table>
+
+        <!-- 分页 -->
+
+        <div class="page">
+
+			{$page}
+
+        </div>
+
+	</div>
+
+</block>
+
+<block name="script">
+
+<script src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+$('#cancel2').click(function(){
+
+ 	$('#chart').css('display','none');
+
+ 	$('#viewtitle').html('');
+
+	$('#viewimg').attr('src','');
+
+	$('#viewcontents').html('');
+
+});
+
+
+
+$('.view').mouseover(function(){
+
+	$(this).css('color','#3A1919');
+
+	$(this).css('background','#E5E5E5');
+
+	$(this).css('cursor','pointer');
+
+})
+
+$('.view').mouseout(function(){
+
+	$(this).css('color','');
+
+	$(this).css('background','');
+
+	$(this).css('cursor','default');
+
+})
+
+
+
+$('.view').click(function(){
+
+	$('#chart').css('display','block');
+
+	var url=$(this).attr('url');
+
+	$.get(url,function(data){
+
+		$('#viewtitle').html(data['title']);
+
+		$('#viewimg').attr('src','.'+data['cover']);
+
+		$('#viewcontents').html(data['content']);
+
+	},'json');
+
+})
+
+</script>
+
+</block>

@@ -1,0 +1,198 @@
+<extend name="Public/base"/>
+
+<block name="style">
+
+<style>
+
+</style>
+
+</block>
+
+<block name="body">
+
+	<div class="main-title">
+
+		<h2>订单列表</h2>
+
+	</div>
+
+
+
+	<div class="cf">
+
+		<a class="btn" href="{:U('orderAdd')}">新 增</a>
+
+
+	</div>
+
+	<div class="data-table table-striped">
+
+		 <table>
+
+			<thead>
+
+				<tr>
+					<th>订单者</th>
+
+					<th>微信名</th>
+
+					<th>订单信息</th>
+
+                    <th>订购日期</th>
+
+					<th>优惠</th>
+
+                   	<th>运费</th>
+
+                   	<th>订单价</th>
+
+                   	<th>联系电话</th>
+
+                   	<th>送货地址</th>
+
+					<th>操作</th>
+
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				<notempty name="data">
+
+				<volist name="data" id="vo">
+
+					<tr>
+
+						<td>{$vo.name}</td>
+
+						<td>{$vo.weiname}</td>
+
+						<td>{$vo.orderinfo}</td>
+
+						<td>{$vo.ordertime|date='Y-m-d H:i',###}</td>
+
+						<td>{$vo.discount}</td>
+
+						<td>{$vo.deliveryfee}</td>
+
+						<td>{$vo.price}</td>
+
+						<td>{$vo.phone}</td>
+
+                        <td>{$vo.address}</td>
+
+                        <td>
+
+                        <a title="编辑" href="{:U('orderEdit?id='.$vo['id'])}">编辑</a>
+
+                        <a class="confirm ajax-get" title="删除" href='{:U('orderDel?id='.$vo['id'])}'>/删除</a>
+
+                        <a class="checkout" title="打印小票" href='javascript:void(0);' data-id="{$vo['id']}">/出单</a>
+
+                        </td>
+
+					</tr>
+
+				</volist>
+
+				<else/>
+
+				<td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+
+				</notempty>
+
+			</tbody>
+
+		</table>
+
+        <!-- 分页 -->
+
+        <div class="page">
+
+			{$page}
+
+        </div>
+
+	</div>
+
+</block>
+
+<block name="script">
+
+<script src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script type="text/javascript">
+
+$('#cancel2').click(function(){
+
+ 	$('#chart').css('display','none');
+
+ 	$('#viewtitle').html('');
+
+	$('#viewimg').attr('src','');
+
+	$('#viewcontents').html('');
+
+});
+
+
+
+$('.view').mouseover(function(){
+
+	$(this).css('color','#3A1919');
+
+	$(this).css('background','#E5E5E5');
+
+	$(this).css('cursor','pointer');
+
+})
+
+$('.view').mouseout(function(){
+
+	$(this).css('color','');
+
+	$(this).css('background','');
+
+	$(this).css('cursor','default');
+
+})
+
+
+
+$('.view').click(function(){
+
+	$('#chart').css('display','block');
+
+	var url=$(this).attr('url');
+
+	$.get(url,function(data){
+
+		$('#viewtitle').html(data['title']);
+
+		$('#viewimg').attr('src','.'+data['cover']);
+
+		$('#viewcontents').html(data['content']);
+
+	},'json');
+
+})
+
+
+$('.checkout').click(function(){
+	var id=$(this).data('id');
+	_url='http://www.nowork.com/index.php/Admin/Order/checkout/id/'+id+'.html';
+	 layer.open({
+      type: 2,
+      title: '很多时候，我们想最大化看，比如像这个页面。',
+      shadeClose: true,
+      shade: false,
+      maxmin: false, //开启最大化最小化按钮
+      area: ['893px', '600px'],
+      content: _url
+  })
+})
+
+</script>
+
+</block>

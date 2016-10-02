@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<php>
+    $title=C('WEB_SITE_TITLE');
+</php>
+<title>{$title}</title>
+
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta charset="utf-8">
+<link href="__CSS__/listhome1_.css" rel="stylesheet" type="text/css" />
+ 
+<style>
+ /* = 分页
+------------------------------------------ */
+.page {
+    margin: 20px 25%;
+    *zoom: 1;
+}
+.page:before,
+.page:after {
+    display: table;
+    content: "";
+}
+.page:after {
+    clear:both;
+}
+.page a,
+.page span {
+    float: left;
+    margin-left: -1px;
+    padding: 0 14px;
+    height: 30px;
+    line-height: 30px;
+    color: #000;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    /*background-color: #4bbd00;*/
+}
+.page a:hover
+ {
+    text-decoration: none;
+    background-color: #387C0B;
+}
+.page .current {
+	border-top: 1px solid #387C0B;
+}
+.page .next,
+.page .prev {
+    font-family: "宋体";
+    font-weight: bold;
+}
+.page .rows {
+	border-right: 1px solid #CCCCCC;
+}
+.page .num {
+	display: none;
+}
+</style>
+</head>
+<script>
+window.onload = function ()
+{
+var oWin = document.getElementById("win");
+var oLay = document.getElementById("overlay");	
+var oBtn = document.getElementById("popmenu");
+var oClose = document.getElementById("close");
+oBtn.onclick = function ()
+{
+oLay.style.display = "block";
+oWin.style.display = "block"	
+};
+oLay.onclick = function ()
+{
+oLay.style.display = "none";
+oWin.style.display = "none"	
+}
+};
+</script>
+<body id="listhome1">
+<if condition="$category lt 7">
+<div id="ui-header">
+<div class="fixed" style="text-align: center">
+
+<volist name="list" id ="vo">
+    <if condition="$category eq $vo['id']">
+        <a>{$vo.title}</a>
+</if>
+</volist>
+</div>
+</div>
+<else/>
+<div id="ui-header">
+<div class="fixed">
+<a class="ui-title" id="popmenu">选择分类</a>
+<a class="ui-btn-left_pre" href="javascript:history.go(-1);"></a>
+<a class="ui-btn-right" href="javascript:location.reload()"></a>
+</div>
+</div>
+<div id="overlay"></div>
+<div id="win">
+<ul class="dropdown">
+<volist name="list" id ="vo">
+<if condition="$vo['id'] gt 6">
+<li><a href="{:U('category',array('category'=>$vo['id']))}"><span>{$vo.title}</span></a></li>
+</if>
+</volist>
+<div class="clr"></div>
+</ul>
+</div>
+</if>
+<div class="Listpage">
+<div class="top46"></div>
+<div id="todayList">
+<ul  class="todayList">
+<volist name="data" id="v">
+<li>
+<a href="{$v.url}">
+<div class="img"><img src="{$v.thumb_url|ltrim='.'}"></div>
+<h2>{$v.title}</h2>
+<p class="onlyheight"></p>
+<div class="commentNum"></div>
+</a>
+</li>
+</volist>
+
+</ul>
+</div>
+<div class="page">
+	{$page}
+<!-- <div class=" disabled "><a   >上一页</a></div>
+<div class="allpage">
+<div class="currentpage">1/49</div>
+<select  id="dropdown-select" name="select" onchange="dourl('http://wx13255.wxapi.cn/wxapi.php?ac=listhome1&tid=138997&page='+this.value)">
+<option   selected="selected"  value=1 >第1页</option><option  value=2 >第2页</option><option  value=3 >第3页</option><option  value=4 >第4页</option><option  value=5 >第5页</option><option  value=6 >第6页</option><option  value=7 >第7页</option><option  value=8 >第8页</option><option  value=9 >第9页</option><option  value=10 >第10页</option><option  value=11 >第11页</option><option  value=12 >第12页</option><option  value=13 >第13页</option><option  value=14 >第14页</option><option  value=15 >第15页</option><option  value=16 >第16页</option><option  value=17 >第17页</option><option  value=18 >第18页</option><option  value=19 >第19页</option><option  value=20 >第20页</option><option  value=21 >第21页</option><option  value=22 >第22页</option><option  value=23 >第23页</option><option  value=24 >第24页</option><option  value=25 >第25页</option><option  value=26 >第26页</option><option  value=27 >第27页</option><option  value=28 >第28页</option><option  value=29 >第29页</option><option  value=30 >第30页</option><option  value=31 >第31页</option><option  value=32 >第32页</option><option  value=33 >第33页</option><option  value=34 >第34页</option><option  value=35 >第35页</option><option  value=36 >第36页</option><option  value=37 >第37页</option><option  value=38 >第38页</option><option  value=39 >第39页</option><option  value=40 >第40页</option><option  value=41 >第41页</option><option  value=42 >第42页</option><option  value=43 >第43页</option><option  value=44 >第44页</option><option  value=45 >第45页</option><option  value=46 >第46页</option><option  value=47 >第47页</option><option  value=48 >第48页</option><option  value=49 >第49页</option>                </select>
+</div>
+<div class=" " ><a  href="http://wx13255.wxapi.cn/wxapi.php?ac=listhome1&tid=138997&page=2"   >下一页</a></div>
+</div> -->
+</div>
+</div>
+<script>
+function dourl(url){
+location.href= url;
+}
+</script>
+<script src="__JS__/jweixin-1.0.0.js" type="text/javascript"></script>
+<script>
+var appIdstr='wx2cfca065a7daa7d7';
+var timestampstr =1459261308;
+var nonceStrstr='5elOPFz7zqXvjY1J';
+var signaturestr='b7be3d16a305acb1322b1d30de49dee207c681cd';
+</script>
+<script src="__JS__/newfxjs.js" type="text/javascript"></script> 
+</body>
+</html>

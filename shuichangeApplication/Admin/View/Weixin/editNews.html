@@ -1,0 +1,39 @@
+<extend name="Public/base" />
+
+<block name="body">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+<div class="form-item cf" >
+	<div class="main-title cf">
+		<h2>修改图文分类</h2>
+	</div>
+	<form action="{:U('doEditnewscategory')}" method="post" class="form-horizontal" id="form">
+		<input type="hidden" name="id" value="{$data.id}">
+			<div class="controls">
+				图文标题<input type="text" style="width:300px; margin-left:45px;"class="text input-large" name="title" value="{$data.title}" readonly="readonly">
+			</div>
+			<div class="controls">
+			选择分类
+			<select name="category" style="margin-left:45px;">
+                                    <volist name="list" id="vo">
+                                        <option value="{$vo.id}" <eq name="vo['id']" value="$data['category']">selected</eq>>{$vo.title}</option>
+                                    </volist>
+                                </select>
+            </div>
+		</br>
+
+			<div class="form-item">
+			</br></br>
+			<button type="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>	
+			<button style="margin-left:30px;"class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		    </div>
+		    </form>
+		    
+		</div>
+</block>
+<block name="script">
+<script type="text/javascript">
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+</script>
+</block>
+

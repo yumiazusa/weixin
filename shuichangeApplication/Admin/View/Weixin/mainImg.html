@@ -1,0 +1,83 @@
+<extend name="Public/base"/>
+
+<block name="style">
+
+<style>
+
+</style>
+
+</block>
+
+<block name="body">
+
+	<div class="main-title">
+
+		<h2>新闻页主图</h2>
+
+	</div>
+
+
+
+	<div class="cf">
+
+		<a class="btn" href="{:U('editImg')}">修改</a>
+	</div>
+
+	<div class="data-table table-striped">
+
+		 <table>
+
+			<thead>
+
+				<tr>
+
+                    <th>图片</th>
+
+					
+					<th>操作</th>
+
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				<notempty name="img">
+
+
+					<tr>
+
+						<td style="text-align: center;"><img width="10%" src="{$img.image|get_cover='path'}"/></td>
+
+						<td>
+                        <a title="编辑" href="{:U('editImg')}">编辑</a>
+
+                        </td>
+
+					</tr>
+
+
+				<else/>
+
+				<td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+
+				</notempty>
+
+			</tbody>
+
+		</table>
+
+        <!-- 分页 -->
+	</div>
+
+</block>
+
+<block name="script">
+
+<script src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+</script>
+
+</block>

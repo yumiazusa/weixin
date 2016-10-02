@@ -1,0 +1,131 @@
+<extend name="Public/base"/>
+
+<block name="style">
+
+<style>
+.update{
+	display: none;
+}
+</style>
+
+</block>
+
+<block name="body">
+
+	<div class="main-title">
+
+		<h2>新闻页<span class='remind' style="color:red;"></span></h2>
+
+	</div>
+
+
+
+	<div class="cf">
+		<a class="btn" href="{:U('news')}">全部</a>
+		<volist name="list" id="v">
+		<a class="btn" href="{:U('news',array('category'=>$v['id']))}">{$v.title}</a>
+	    </volist>
+	    <a class="btn update" href="#">下载更新</a>
+	</div>
+
+	<div class="data-table table-striped">
+
+		 <table>
+
+			<thead>
+
+				<tr>
+                    <th>ID</th>
+					<th width="20%">标题</th>
+					<th width="30%">封面图片</th>
+					<th width="10%">图文分类</th>
+					<th width="20%">创建时间</th>
+					<th width="15%">操作</th>
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				<notempty name="data">
+
+					<volist name="data" id="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo.title}</td>
+						<td><img src="{$vo.thumb_url|ltrim='.'}" width="15%" /></td>
+						<td>{$vo.cat}</td>
+						<td>{$vo.create_time|date="Y-m-d",###}</td>
+						<td>
+                        <a title="编辑" href="#" class="view" data-url="{$vo.url}">预览|</a>
+                        <a title="编辑" href="{:U('editNews',array('id'=>$vo['id']))}">编辑|</a>
+						<a href="{:U('delNews',array('id'=>$vo['id']))}" class="confirm ajax-get">删除</a>
+                        </td>
+
+					</tr>
+					</volist>
+
+				<else/>
+
+				<td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+
+				</notempty>
+
+			</tbody>
+
+		</table>
+		<div class="page">
+        {$page}
+        </div>
+        <!-- 分页 -->
+	</div>
+
+</block>
+
+<block name="script">
+
+<script src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$.ajax({ url: '{:U("checkUpdate")}', success: function(data){
+		if(parseInt(data) > 0){
+			$('.remind').html('(微信端有更新'+data+'条)');
+			$('.update').css('display','inline-block');
+		}else if(parseInt(data) < 0){
+			$('.remind').html('(微信端有删除)');
+			$('.update').css('display','none');
+		}else if(parseInt(data) == 0){
+			$('.remind').html('(微信端无修改)');
+			$('.update').css('display','none');
+		}
+      }});
+})
+
+$('.update').click(function(){
+	$.ajax({ url: '{:U("updateNews")}', success: function(data){
+		if(data == 1){
+			alert('更新成功！');
+			location.reload();
+		}else{
+			alert('更新失败！');
+			location.reload();
+		}
+	  }
+	});
+})
+
+$('.view').click(function(){
+	var url =$(this).data('url');
+	layer.open({
+    type: 2,
+    title: '数据汇总页',
+    shadeClose: true,
+    shade: 0.8,
+    area: ['50%', '90%'],
+    content: [url] 
+	});
+});
+</script>
+
+</block>

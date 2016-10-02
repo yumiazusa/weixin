@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>订单({})</title>
+<style>
+.container1{
+	border-collapse:collapse;
+	border:solid 1px;
+}
+table tr td{
+	border: 1px solid black;
+}
+
+</style>
+<script language="javascript" src="__STATIC__/print/LodopFuncs.js"></script>
+</head>
+<body>
+<form id="form1">
+<table class="container1">
+	<tr>
+		<td colspan="2">食风堂</td>
+	</tr>
+	<tr>
+		<td colspan="2">订单号：{$data.ordersn}<font size=""></font></td>
+	</tr>
+	<tr>
+		<td colspan="2">客服：不想上班二三事</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 8px;" colspan="2">--------------------------</td>
+	</tr>
+	<tr>
+		<td width style="padding-left: 10px">订单日期</td>
+		<td style="text-align:left;">{$data.ordertime}</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 8px; margin:0;" colspan="2">--------------------------</td>
+	</tr>
+	<volist name="data.orderinfo" id="vo">
+	<tr>
+		<td width style="padding-left: 10px">{$vo}</td>
+		<td style="text-align:right;">*1</td>
+	</tr>
+   </volist>
+	<tr>
+		<td style="padding-left: 8px; margin:0;" colspan="2">--------------------------</td>
+	</tr>
+	<tr>
+		<td width style="text-align: right; font-size: 13px;">食品/FOOD</td>
+		<td style="text-align:right; font-size: 13px;">{$data.allprice}</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 8px; margin:0;" colspan="2">--------------------------</td>
+	</tr>
+	<tr>
+		<td width style="text-align: right; font-size: 13px;">折扣</td>
+		<php>
+			$dis=$data['allprice']-$data['price']+$data['deliveryfee'];
+		</php>
+		<td style="text-align:right; font-size: 13px;">{$dis}</td>
+	</tr>
+	<tr>
+	<tr>
+		<td style="padding-left: 8px; margin:0;" colspan="2">--------------------------</td>
+	</tr>
+	<tr>
+		<td width style="text-align: right; font-size: 13px;">运费</td>
+		<td style="text-align:right; font-size: 13px;">{$data['deliveryfee']}</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 8px; margin:0;" colspan="2">--------------------------</td>
+	</tr>
+	<tr>
+		<td width style="text-align: right; font-size: 13px;">总计</td>
+		<td style="text-align:right; font-size: 13px;">{$data['price']}</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 8px; margin:0;" colspan="2">--------------------------</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 8px; margin:0;" colspan="2">送货地址：</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 8px; margin:0;" colspan="2">{$data['address']}&nbsp;{$data['name']}&nbsp;{$data['phone']}</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 8px; margin:0;" colspan="2">--------------------------</td>
+	</tr>
+  <!-- <tr>
+    <td>
+      <p align="center"><font face="宋体" size="3">科学家</font>
+      <p align="left"><font face="宋体" size="3">　地址：中国北京社会科学院附近东大街西胡同</font></p>
+      <p align="left"><font face="宋体" size="3">　电话：010-88811888</font></p>
+      <p><br>      　
+      </p>
+    </td>
+  </tr> -->
+</table>
+
+</form>
+
+
+<p><a href="javascript:prn1_preview()">打印预览</a>,可<a href="javascript:prn1_print()">直接打印</a>也可      
+<a href="javascript:prn1_printA()">选择打印机</a>打印。<br><br>
+</p>
+<script language="javascript" type="text/javascript">   
+        var LODOP; //声明为全局变量 
+        var lll= "不想上班食风堂";
+	function prn1_preview() {	
+		// var lala = document.getElementById("form1").innerHTML;
+		// alert(lala);
+		CreateOneFormPage();	
+		LODOP.PREVIEW();	
+	};
+	function prn1_print() {		
+		CreateOneFormPage();
+		LODOP.PRINT();	
+	};
+	function prn1_printA() {		
+		CreateOneFormPage();
+		LODOP.PRINTA(); 	
+	};	
+	function CreateOneFormPage(){
+		LODOP=getLodop();  
+		LODOP.PRINT_INIT("打印");
+		// LODOP.SET_PRINT_STYLE("FontSize",12);
+		// LODOP.SET_PRINT_STYLE("Bold",1);
+		LODOP. ADD_PRINT_LINE(37,18,37,172,4,1);
+		LODOP.ADD_PRINT_TEXT("4.9mm","4mm","45mm","10mm",lll);
+		LODOP.SET_PRINT_STYLEA(2,"FontName","隶书");
+		LODOP.SET_PRINT_STYLEA(2,"FontSize",16);
+		LODOP.ADD_PRINT_IMAGE(40,28,130,130,"E:/www/nowork/shuichange/Public/static/print/1.jpg"); 
+		LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
+		LODOP. ADD_PRINT_LINE(173,18,173,172,4,1);
+		LODOP.ADD_PRINT_HTM(185,5,'100%','100%',document.getElementById("form1").innerHTML);
+		LODOP.SET_PRINT_PAGESIZE(1,570,2500,"CreateCustomPage");
+		//矩形框
+		// LODOP.ADD_PRINT_RECT(5,5,50,50,0,1);
+	};
+
+</script> 
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+    <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+
+        <script type="text/javascript" src="__STATIC__/UploadImages.js"></script>
+
+        <div class="main-title cf">
+
+        <h2>
+
+            修改微信自定义菜单
+
+        </h2>
+
+    </div>
+
+    <!-- 标签页导航 -->
+
+<div class="tab-wrap">
+
+    <ul class="tab-nav nav">
+
+        <li data-tab="tab1" class="current"><a href="javascript:void(0);">基础</a></li>
+
+       </ul>
+
+    <div class="tab-content">
+
+    <!-- 表单 -->
+
+    <form id="form" action="{:U('doWeixinMenuEdit')}" method="post" class="form-horizontal">
+
+        <!-- 基础文档模型 -->
+
+        <div id="tab1" class="tab-pane in tab1">
+
+            <input type='hidden' name="id" value="{$data.id}"/>
+
+                <div class="form-item cf">
+
+                    <label class="item-label">排序号<span class="check-tips">（序号越小在越前）</span></label>
+
+                    <div class="controls">
+
+                    <input type="text" class="text input-large" name="sort" value="{$data.sort}">
+
+                    </div>
+
+                    </div>
+
+                    <div class="form-item cf">
+
+                    <label class="item-label">一级菜单<span class="check-tips">(如果是一级菜单，选择“无”即可）</span></label>
+
+                    <div class="controls">
+
+                            <select name="pid">
+
+                                <option value="0" <if condition="$data['pid'] eq 0">selected</if>>无</option>
+
+                                <volist name="pid" id="vo">
+
+                                <option value="{$vo.id}" <if condition="$data['pid'] eq $vo['id']">selected</if>>{$vo.title}</option>
+
+                               </volist>
+
+                            </select></div></div>
+
+                    <div class="form-item cf">
+
+                    <label class="item-label">菜单名<span class="check-tips">（可创建最多 3 个一级菜单，每个一级菜单下可创建最多 5 个二级菜单。）</span></label>
+
+                    <div class="controls">
+
+                    <input type="text" class="text input-large" name="title" value="{$data.title}">
+
+                    </div>
+
+                    </div>
+
+                    <div class="form-item cf" id="menutype">
+
+                    <label class="item-label">菜单类型<span class="check-tips"></span></label>
+
+                    <div class="controls">
+
+                            <select name="type">
+
+                                <option value="click" <if condition="$data['type'] eq 'click'">selected</if>>点击事件推送</option>
+
+                                <option value="view" <if condition="$data['type'] eq 'view'">selected</if>>url跳转</option>
+
+                                <option value="scancode_push" <if condition="$data['type'] eq 'scancode_push'">selected</if>>扫码推事件</option>
+
+                                <option value="scancode_waitmsg" <if condition="$data['type'] eq 'scancode_waitmsg'">selected</if>>扫码带提示</option>
+
+                                <option value="pic_sysphoto" <if condition="$data['type'] eq 'pic_sysphoto'">selected</if>>弹出系统拍照发图</option>
+
+                                <option value="pic_photo_or_album" <if condition="$data['type'] eq 'pic_photo_or_album'">selected</if>>弹出拍照或者相册发图</option>
+
+                                <option value="pic_weixin" <if condition="$data['type'] eq 'pic_weixin'">selected</if>>弹出微信相册发图器 </option>
+
+                                <option value="location_select" <if condition="$data['type'] eq 'location_select'">selected</if>>弹出地理位置选择器  </option>
+
+                                <option value="non" <if condition="$data['type'] eq 'non'">selected</if>>无事件的一级菜单 </option>
+
+                            </select></div></div>
+
+                    <notempty name="data.keyword">
+
+                    <div class="form-item cf" id="keyinput" style="display:block;">
+
+                    <label class="item-label">关联关键词<span class="check-tips"></span></label>
+
+                    <div class="controls">
+
+                    <input type="text" class="text input-large" name="keyword" value="{$data.keyword}">
+
+                    </div>
+
+                    </div>
+
+                    <div class="form-item cf" id="urlinput" style="display:none;">
+
+                    <label class="item-label">关联URL<span class="check-tips"></span></label>
+
+                    <div class="controls">
+
+                    <input type="text" class="text input-large" name="url" value="">
+
+                    </div>
+
+                    </div>
+
+                    </notempty>
+
+                    <notempty name="data.url">
+
+                    <div class="form-item cf" id="keyinput" style="display:none;">
+
+                    <label class="item-label">关联关键词<span class="check-tips"></span></label>
+
+                    <div class="controls">
+
+                    <input type="text" class="text input-large" name="keyword" value="">
+
+                    </div>
+
+                    </div>
+
+                    <div class="form-item cf" id="urlinput" style="display:block;">
+
+                    <label class="item-label">关联URL<span class="check-tips"></span></label>
+
+                    <div class="controls">
+
+                    <input type="text" class="text input-large" name="url" value="{$data.url}">
+
+                    </div>
+
+                    </div>
+
+                    </notempty>
+
+            <div class="form-item cf">
+
+            <button class="btn submit-btn ajax-post hidden" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+
+            <a class="btn btn-return" href="{:U('weixinMenu')}">返 回</a>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+    </form>
+
+    </div>
+
+</div>
+
+</block>
+
+
+
+<block name="script">
+
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+<script type="text/javascript">
+
+$('#menutype select').change(function(){
+
+   var type = $(this).val();
+
+   if(type =="view"){
+
+    $('#keyinput input').val('');
+
+    $('#keyinput').css('display','none');
+
+    $('#urlinput').css('display','block');
+
+   }else{
+
+    $('#urlinput input').val('');
+
+    $('#keyinput').css('display','block');
+
+    $('#urlinput').css('display','none');
+
+   }
+
+})
+
+</script>
+
+</block>
+
