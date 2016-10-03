@@ -41,7 +41,6 @@ class WeixinController extends HomeController {
 
 			$test_str = C('WEI_REPLAYWORD_SUBSCRIBE');
 			$index_response = $test_str;
-			$response='你好啊';
 			$text = isset($response) ? $response : $index_response;
 			$wechat->response($text, 'text');
 
