@@ -1,7 +1,7 @@
 <?php
 
 namespace Admin\Controller;
-class ContractionController extends AdminController {
+class ConstractionController extends AdminController {
 
 		public function Constractions(){
 			$this->display();
