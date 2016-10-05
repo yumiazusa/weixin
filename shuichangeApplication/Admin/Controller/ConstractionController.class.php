@@ -3,8 +3,8 @@
 namespace Admin\Controller;
 class ConstractionController extends AdminController {
 
-		public function Constractions(){
-			 $this->display('constractions');
+		public function index(){
+			 $this->display();
 		}
 
 		
